@@ -13,7 +13,7 @@ def main():
 
     writeFile( result_filePath, hanmingDistance )
 
-Test()
+if __name__ == '__main__':
+    main()
 
-main()
     
