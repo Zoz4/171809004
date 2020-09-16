@@ -37,7 +37,7 @@ class SimHash():
         # 用jieba分词对文本进行分词
         seg_list = jieba.lcut(self.text)
             # 设置停用词，并用TF-IDF模型计算词的权重
-        jieba.analyse.set_stop_words('stop_words.utf8')
+        jieba.analyse.set_stop_words('.\stop_words.txt')
         words = jieba.analyse.extract_tags('|'.join(seg_list),topK=len(seg_list),withWeight=True)
 
         if(len(words)==0):
