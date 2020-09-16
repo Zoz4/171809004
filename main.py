@@ -28,9 +28,9 @@ def main():
         orig = SimHash( orig_text )
         imit = SimHash( imit_text )
 
-        hanmingDistance = orig.hammingDistance( imit )
+        h = orig.hammingDistance( imit )
 
-        writeFile( result_filePath, hanmingDistance )
+        writeFile( result_filePath, h )
 
     except Error as msg:
         print(msg)
