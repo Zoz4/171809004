@@ -1,11 +1,15 @@
 import unittest
 from tools import *
+import os
+from main import *
+import warnings
 
 class TestSimHash(unittest.TestCase):
     def setUp(self):
-        print("Start testing: ")
+        warnings.simplefilter('ignore', ResourceWarning)
+        print("\nStart testing: ")
     def tearDown(self):
-        print("Test over ")
+        print("Test over\n")
 
        # 进行题目中的样例测试
     def test_origData1(self):
@@ -28,9 +32,41 @@ class TestSimHash(unittest.TestCase):
         doSelfTest('.\\testdata\\','orig.txt','orig_0.8_rep.txt')
 
        # 进行自定义的样例测试
+
+       # 选取另一篇文章（orig）和 原样例数据（other）比较 
     def test_selfData1(self):
-        # 选取另一篇文章（orig）和 原样例数据（other）比较 
         doSelfTest('.\\selfdata\\','orig.txt','other.txt')
+    # 测试main.py
+       # os.chdir(文件 main.py 所在目录) 
+    # 正常执行
+    def test_main(self):
+       os.chdir('.\\')
+       os.system('python main.py .\\selfdata\\orig.txt .\\selfdata\\other.txt .\\selfdata\\result.txt' )
+    def test_mainerror1(self):
+       # 原文件名（路径）错误
+       os.chdir('.\\')
+       os.system('python main.py .\\selfdata\\a.txt .\\selfdata\\orig.txt .\\selfdata\\result.txt' )
+    def test_mainerror2(self):
+       # 抄袭文件名（路径）错误
+       os.chdir('.\\')
+       os.system('python main.py .\\selfdata\\orig.txt .\\selfdata\\a.txt .\\selfdata\\result.txt' )
+    def test_mainerror3(self):
+       # 目的文件名（路径）错误
+       os.chdir('.\\')
+       os.system('python main.py .\\selfdata\\orig.txt .\\selfdata\\other.txt .\\error\\result.txt' )
+    # 空文件错误
+    def test_mainerror4(self):
+       # 原文件为空
+       os.chdir('.\\')
+       os.system('python main.py .\\selfdata\\empty.txt .\\selfdata\\orig.txt .\\selfdata\\result.txt' )
+    def test_mainerror5(self):
+       # 抄袭文件为空
+       os.chdir('.\\')
+       os.system('python main.py .\\selfdata\\orig.txt .\\selfdata\\empty.txt .\\selfdata\\result.txt' )
+    def test_mainerror6(self):
+       # TF-IDF得到键值对字典为空
+       os.chdir('.\\')
+       os.system('python main.py .\\selfdata\\sign.txt .\\selfdata\\orig.txt .\\testdata\\result.txt' )
 
 def doSelfTest(file_path, orig_filename, imit_filename):
     orig = SimHash( readFile( file_path+orig_filename) )

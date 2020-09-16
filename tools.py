@@ -2,7 +2,7 @@ import jieba
 import jieba.analyse
 import mmh3
 from exceptionalHandling import *
-
+import logging
 # 读入文件，去掉多余空白后转为字符串返回
 def readFile( file_path ):
 
@@ -28,16 +28,17 @@ def hash128ToStr( word ):
     return hashstr
 
 class SimHash():
-    def __init__(self, text = ''):
+    def __init__(self, text):
         self.text = text
         self.simhashstr = self.simHash()
 
  # 计算128位长的Simhash值
     def simHash(self):
         # 用jieba分词对文本进行分词
+        jieba.setLogLevel(logging.INFO)
         seg_list = jieba.lcut(self.text)
             # 设置停用词，并用TF-IDF模型计算词的权重
-        jieba.analyse.set_stop_words('.\stop_words.txt')
+        jieba.analyse.set_stop_words('stop_words.txt')
         words = jieba.analyse.extract_tags('|'.join(seg_list),topK=len(seg_list),withWeight=True)
 
         if(len(words)==0):
