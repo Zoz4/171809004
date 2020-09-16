@@ -7,7 +7,7 @@ import warnings
 class TestSimHash(unittest.TestCase):
     def setUp(self):
         warnings.simplefilter('ignore', ResourceWarning)
-        print("\nStart testing: ")
+        print("Start testing: ")
     def tearDown(self):
         print("Test over\n")
 
@@ -42,6 +42,10 @@ class TestSimHash(unittest.TestCase):
     def test_main(self):
        os.chdir('.\\')
        os.system('python main.py .\\selfdata\\orig.txt .\\selfdata\\other.txt .\\selfdata\\result.txt' )
+    def test_mainerror0(self):
+       # 命令行参数设置错误
+       os.chdir('.\\')
+       os.system('python main.py .\\selfdata\\orig.txt .\\selfdata\\other.txt')
     def test_mainerror1(self):
        # 原文件名（路径）错误
        os.chdir('.\\')
